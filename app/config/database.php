@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'default' => 'mysql',
+	'default' => isset($_ENV['DEFAULT_DATABASE']) ? $_ENV['DEFAULT_DATABASE'] : 'mysql',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -82,6 +82,8 @@ return array(
 			'password' => '',
 			'prefix'   => '',
 		),
+
+		'heroku' => isset($_ENV['HEROKU_DATABASE_SETTINGS']) ? $_ENV['HEROKU_DATABASE_SETTINGS'] : array(),
 
 	),
 
