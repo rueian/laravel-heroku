@@ -24,11 +24,35 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-$env = $app->detectEnvironment(array(
+$env = $app->detectEnvironment(function()
+{
 
-	'local' => array('your-machine-name'),
+	// local development environments are set with machine host names
+	$environments = array('local' => array('your-machine-name'));
 
-));
+	// loop through environments and check for local development hostnames
+	foreach ($environments as $environment => $hosts)
+	{
+		foreach ((array) $hosts as $host)
+		{
+			$isThisMachine = str_is($host, gethostname());
+			if ($isThisMachine) return $environment;
+		}
+	}
+
+	// if no local hostname is found, look for
+	// other environments are set using the LARAVEL_ENV server variable
+	if (array_key_exists('LARAVEL_ENV', $_SERVER))
+	{
+		return $_SERVER['LARAVEL_ENV'];
+	}
+	// and we fall back to production
+	else
+	{
+		return 'production';
+	}
+
+});
 
 /*
 |--------------------------------------------------------------------------
