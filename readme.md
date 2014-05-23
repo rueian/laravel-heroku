@@ -1,22 +1,29 @@
 # Laravel PHP Framework with Heroku
+This project modify some default configurations of [Laravel Framework](http://laravel.com/) to make deploying to heroku more easily.
+
+## Install Laravel on Local
+After clone this project, you need to install Laravel through composer.
+```
+$ composer install
+```
 
 ## Environment Detection
-Please modify `bootstrap/start.php` to specify local environment.
+Please replace 'your-machine-name' in `bootstrap/start.php` to specify local environment to your machines.
 
-For other environments, they can be assigned with `LARAVEL_ENV` variable.
+For other environments, they can be assigned with `$_SERVER['LARAVEL_ENV']` variable.
 
 ## Database Settings
-For heroku database settings, you can copy .env.heroku.php to the corresponding file name that match your `LARAVEL_ENV` variable on heroku.
 
-For example, if your `LARAVEL_ENV` variable is 'staging', then you should go to heroku bash:
+The `.env.heroku.php` is configured with heroku postgresql database.
+You can just set `$_SERVER['LARAVEL_ENV']` to 'heroku' in heroku app settings.
+
+## Deploy to Heroku
+After configurations, you can deploy to heroku with
 ```
-$ heroku run bash
+$ git push heroku master
 ```
-and copy this file as `.env.staging.php`
-```
-$ cp .env.heroku.php .env.staging.php
-```
-if you need to modify this file in heroku, you can use this [heroku-vim](https://github.com/naaman/heroku-vim).
 
 ## Other Configuration
-Please see [Laravel Configuration Docs](http://laravel.com/docs/configuration)
+Please see
+* [Laravel Configuration Docs](http://laravel.com/docs/configuration)
+* [Heroku PHP Docs](https://devcenter.heroku.com/categories/php)
